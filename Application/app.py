@@ -1,8 +1,9 @@
 import os
 import streamlit as st
-import openai
+from openai import OpenAI
 
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
 import pdfplumber
 from io import BytesIO
 
@@ -22,15 +23,13 @@ def get_recommendations(text, gender, experience, age):
     prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
 
     # Correct API call for version 1.0.0 and above
-    response = openai.Completion.create(
-        model="gpt-3.5-turbo",
-        prompt=prompt,
-        max_tokens=500,
-        temperature=0.7
-    )
+    response = client.completions.create(model="gpt-3.5-turbo",
+    prompt=prompt,
+    max_tokens=500,
+    temperature=0.7)
 
     # Accessing the completion text correctly
-    return response['choices'][0]['message']['content'].strip()
+    return response.choices[0].message.content.strip()
 
 # Function to read file
 def read_file(file):
