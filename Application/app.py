@@ -22,12 +22,9 @@ def get_recommendations(text, gender, experience, age):
     prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
 
     # Correct API call for version 1.0.0 and above
-    response = client.ChatCompletion.create(
+    response = client.Completion.create(
         model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt}
-        ],
+        prompt=prompt,  # Consolidate the previous system and user messages into one prompt
         max_tokens=500,
         temperature=0.7
     )
