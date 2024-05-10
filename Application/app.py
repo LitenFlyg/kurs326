@@ -25,11 +25,12 @@ def get_recommendations(text, gender, experience, age):
     response = openai.Completion.create(
         model="gpt-3.5-turbo",
         prompt=prompt,
-        max_tokens=500
+        max_tokens=500,
+        temperature=0.7
     )
 
     # Accessing the completion text correctly
-    return response.choices[0].text.strip()
+    return response['choices'][0]['text'].strip()
 
 # Function to read file
 def read_file(file):
