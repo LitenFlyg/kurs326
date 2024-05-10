@@ -1,41 +1,44 @@
-# MPTJB Project
+# CoRecruit Project
 
 ## Description
-This project aims to [Briefly describe the goal and function of your project, including what it does and why it is useful]. Developed using [mention primary programming languages, frameworks, or technologies], it targets [mention the target audience or application domain].
+This project leverages a vast dataset from [Jobtech](https://www.jobtechdev.se/en), containing all job postings from Arbetsförmedlingen, to train an AI aimed at improving recruiters' job listings. By using scientific articles on recruiting to create an initial dataset, the project refines a version of ChatGPT to specifically recommend enhancements to job descriptions. The application, hosted on streamlit.io, serves as a practical tool for recruiters to generate more effective job postings based on AI-driven suggestions, improving the recruitment process through advanced machine learning techniques.
 
 ## Getting Started with VS Code
 
-To contribute to or use this project, you'll need Visual Studio Code installed on your machine. Follow these instructions to clone the project, set up your environment, and start contributing.
+To contribute to or use this project, you'll need Visual Studio Code installed on your machine or another IDE to work with Python/CSS. Follow these instructions to clone the project, set up your environment, and start contributing.
 
 ### Prerequisites
-- Install [Visual Studio Code](https://code.visualstudio.com/) and/or [RStudio Desktop](https://posit.co/download/rstudio-desktop/)
+- Install [Visual Studio Code](https://code.visualstudio.com/)
 - Git installed on your machine
-- [Any other prerequisites like Node.js, Python, etc., depending on your project]
 
 ### Installation
 
 #### Clone the Repository
 1. Open VS Code, press `Ctrl+Shift+P` to open the command palette, and type `Git: Clone`.
-2. Enter the URL `https://github.com/BarreBN/MPTJB` and select a local directory.
+2. Enter the URL `https://github.com/BarreBN/CoRecruit.git` and select a local directory.
 
 #### Open the Project
 - Open the cloned project folder in VS Code.
 
 #### Install Dependencies
-1. Open the terminal in VS Code (`Ctrl+`` or `Terminal > New Terminal` from the menu).
-2. Run the installation command for your project's dependencies (e.g., `npm install` for Node.js projects).
+1. Open the terminal in VS Code by pressing `Ctrl+`` or selecting `Terminal > New Terminal` from the menu.
+2. To install the necessary project dependencies, run the following command:
+   ```bash
+   pip install -r requirements.txt
 
 ### Usage
-Describe how to use the project or how to run scripts/files within VS Code, including any necessary commands or settings.
+To use this project in VS Code, follow these steps:
+1. Open VS Code and navigate to the project directory.
+2. Open the terminal by pressing `Ctrl+`` or selecting `Terminal > New Terminal` from the menu.
+3. Run the Streamlit application by executing the following command:
+   ```bash
+   streamlit run app.py
 
 ## Contributing
-
 1. **Fork the Repository**
    - Visit the GitHub page of the project and click "Fork" at the top right to create a fork under your GitHub account.
-
 2. **Clone Your Forked Repository in VS Code**
    - Open VS Code, press `Ctrl+Shift+P` to open the Command Palette, type `Git: Clone`, and enter the URL of your fork. Choose a local directory to clone the repository into.
-
 3. **Switch to the Development Branch**
    - Open the integrated terminal in VS Code (`Ctrl+``) and switch to the `dev` branch, our primary branch for development:
      ```
@@ -46,7 +49,6 @@ Describe how to use the project or how to run scripts/files within VS Code, incl
      git fetch origin dev:dev
      git checkout dev
      ```
-
 4. **Create Your Feature Branch**
    - Still in the integrated terminal, create and switch to a new branch for your contribution:
      ```
