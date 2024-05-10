@@ -1,36 +1,35 @@
 import os
 import streamlit as st
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 import pdfplumber
 from io import BytesIO
 
-openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # Function to load CSS
 def load_css(file_name):
     # Get the directory of the current script
     script_dir = os.path.dirname(__file__)
-    
+
     # Construct the absolute path to the CSS file
     file_path = os.path.join(script_dir, file_name)
-    
+
     with open(file_path) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # Function to call the GPT model
 def get_recommendations(text, gender, experience, age):
     prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
-    
+
     # Correct API call for version 1.0.0 and above
-    response = openai.Completion.create(
-        model="gpt-3.5-turbo",
-        prompt=prompt,
-        max_tokens=500,
-        temperature=0.7
-    )
+    response = client.completions.create(model="gpt-3.5-turbo",
+    prompt=prompt,
+    max_tokens=500,
+    temperature=0.7)
 
     # Accessing the completion text correctly
-    return response['choices'][0]['text'].strip()
+    return response.choices[0].text.strip()
 
 # Function to read file
 def read_file(file):
