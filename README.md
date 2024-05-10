@@ -34,7 +34,6 @@ To use this project in VS Code, follow these steps:
    ```bash
    streamlit run app.py
 
-
 ## Contributing
 1. **Fork the Repository**
    - Visit the GitHub page of the project and click "Fork" at the top right to create a fork under your GitHub account.
