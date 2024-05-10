@@ -1,35 +1,40 @@
 import os
 import streamlit as st
-import openai
+from openai import OpenAI
+
+client = OpenAI()
+from openai import OpenAI
+
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
 import pdfplumber
 from io import BytesIO
-
-openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # Function to load CSS
 def load_css(file_name):
     # Get the directory of the current script
     script_dir = os.path.dirname(__file__)
-    
+
     # Construct the absolute path to the CSS file
     file_path = os.path.join(script_dir, file_name)
-    
+
     with open(file_path) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-# Function to call the GPT-3 model
-def get_recommendations(text, gender, experience, age):
-    prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
+def get_recommendations(text, gender, experience, age, language):
+    if language == 'Swedish':
+        prompt = f"{text}\n\nGivet att den ideala kandidaten är {gender}, {experience}, och {age}, hur kan denna jobbannons förbättras?"
+        system_message = "Du är en hjälpsam assistent."
+    else:  # Default to English
+        prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
+        system_message = "You are a helpful assistant."
 
-    response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo",
-      messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt}
-        ]
-    )
+    response = client.completions.create(model="gpt-3.5-turbo-instruct",
+    prompt=prompt,
+    max_tokens=500,
+    temperature=0.7)
 
-    return response['choices'][0]['message']['content'].strip()
+    return response.choices[0].text.strip()
 
 # Function to read file
 def read_file(file):
@@ -45,6 +50,9 @@ load_css('styles.css')
 # Sidebar
 st.sidebar.title('Options')
 
+# Add a language selection option
+language = st.sidebar.radio('Language', ['English', 'Swedish'])
+
 gender = st.sidebar.radio('Gender Preference', ['N/A', 'Male', 'Female', 'Non-binary'])
 experience = st.sidebar.radio('Experience Preference', ['N/A', 'Entry Level', 'Mid Level', 'Experienced'])
 age = st.sidebar.radio('Age', ['N/A', 'Young', 'Middle aged', 'Old'])
@@ -59,5 +67,5 @@ if uploaded_file is not None:
     text = read_file(uploaded_file)
 
     # Use the GPT API to recommend changes
-    recommendations = get_recommendations(text, gender, experience, age)
+    recommendations = get_recommendations(text, gender, experience, age, language)
     st.write(recommendations)
