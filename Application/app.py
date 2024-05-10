@@ -58,7 +58,7 @@ experience = st.sidebar.radio('Experience Preference', ['N/A', 'Entry Level', 'M
 age = st.sidebar.radio('Age', ['N/A', 'Young', 'Middle aged', 'Old'])
 
 # Main Area
-st.title('Job Posting Editor')
+st.title('CoRecruit AI')
 
 uploaded_file = st.file_uploader("Upload a job posting", type=['txt', 'pdf'])
 
