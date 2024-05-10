@@ -29,7 +29,7 @@ def get_recommendations(text, gender, experience, age, language):
         prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
         system_message = "You are a helpful assistant."
 
-    response = client.completions.create(model="text-davinci-002",
+    response = client.completions.create(model="gpt-3.5-turbo-instruct",
     prompt=prompt,
     max_tokens=500,
     temperature=0.7)
