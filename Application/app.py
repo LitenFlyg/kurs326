@@ -21,14 +21,15 @@ def load_css(file_name):
 def get_recommendations(text, gender, experience, age):
     prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
 
-    response = openai.Completion.create(
-      engine="text-davinci-002",
-      prompt=prompt,
-      temperature=0.5,
-      max_tokens=150
+    response = openai.Chat.create(
+      model="gpt-3.5-turbo",
+      messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": prompt}
+        ]
     )
 
-    return response.choices[0].text.strip()
+    return response['choices'][0]['message']['content'].strip()
 
 # Function to read file
 def read_file(file):
@@ -44,9 +45,9 @@ load_css('styles.css')
 # Sidebar
 st.sidebar.title('Options')
 
-gender = st.sidebar.radio('Gender Preference', ['Male', 'Female', 'Non-binary'])
-experience = st.sidebar.radio('Experience Preference', ['Entry Level', 'Mid Level', 'Experienced'])
-age = st.sidebar.radio('Age', ['Young', 'Middle aged', 'Old'])
+gender = st.sidebar.radio('Gender Preference', ['N/A', 'Male', 'Female', 'Non-binary'])
+experience = st.sidebar.radio('Experience Preference', ['N/A', 'Entry Level', 'Mid Level', 'Experienced'])
+age = st.sidebar.radio('Age', ['N/A', 'Young', 'Middle aged', 'Old'])
 
 # Main Area
 st.title('Job Posting Editor')
