@@ -21,7 +21,8 @@ def load_css(file_name):
 def get_recommendations(text, gender, experience, age):
     prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
 
-    response = openai.ChatCompletion.create(
+    # Correct API call for version 1.0.0 and above
+    response = client.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
