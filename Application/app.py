@@ -7,7 +7,6 @@ client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 import pdfplumber
 from io import BytesIO
 
-
 # Function to load CSS
 def load_css(file_name):
     # Get the directory of the current script
@@ -52,6 +51,9 @@ load_css('styles.css')
 # Sidebar
 st.sidebar.title('Options')
 
+# Add a language selection option
+language = st.sidebar.radio('Language', ['English', 'Swedish'])
+
 gender = st.sidebar.radio('Gender Preference', ['N/A', 'Male', 'Female', 'Non-binary'])
 experience = st.sidebar.radio('Experience Preference', ['N/A', 'Entry Level', 'Mid Level', 'Experienced'])
 age = st.sidebar.radio('Age', ['N/A', 'Young', 'Middle aged', 'Old'])
@@ -66,5 +68,5 @@ if uploaded_file is not None:
     text = read_file(uploaded_file)
 
     # Use the GPT API to recommend changes
-    recommendations = get_recommendations(text, gender, experience, age)
+    recommendations = get_recommendations(text, gender, experience, age, language)
     st.write(recommendations)
