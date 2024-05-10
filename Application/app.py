@@ -26,16 +26,14 @@ def get_recommendations(text, gender, experience, age, language):
         prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
         system_message = "You are a helpful assistant."
 
-    response = client.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": system_message},
-            {"role": "user", "content": prompt}
-        ],
+    response = openai.Completion.create(
+        engine="text-davinci-002",
+        prompt=prompt,
         max_tokens=500,
-        temperature=0.7)
+        temperature=0.7
+    )
 
-    return response['choices'][0]['message']['content'].strip()
+    return response['choices'][0]['text'].strip()
 
 # Function to read file
 def read_file(file):
