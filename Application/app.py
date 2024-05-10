@@ -18,8 +18,13 @@ def load_css(file_name):
     with open(file_path) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-def get_recommendations(text, gender, experience, age):
-    prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
+def get_recommendations(text, gender, experience, age, language):
+    if language == 'Swedish':
+        prompt = f"{text}\n\nGivet att den ideala kandidaten är {gender}, {experience}, och {age}, hur kan denna jobbannons förbättras?"
+        system_message = "Du är en hjälpsam assistent."
+    else:  # Default to English
+        prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
+        system_message = "You are a helpful assistant."
 
     # Correct API call for version 1.0.0 and above
     response = openai.ChatCompletion.create(
