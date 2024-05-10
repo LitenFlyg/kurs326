@@ -18,11 +18,10 @@ def load_css(file_name):
     with open(file_path) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-# Function to call the GPT model
 def get_recommendations(text, gender, experience, age):
     prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
 
-    response = client.chat_models.create(
+    response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
@@ -32,6 +31,7 @@ def get_recommendations(text, gender, experience, age):
         temperature=0.7
     )
 
+    # Accessing the completion text correctly
     return response['choices'][0]['message']['content'].strip()
 
 # Function to read file
